@@ -11,26 +11,26 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-import environ
-import os
-import dj_database_url
+# import environ
+# import os
+# import dj_database_url
 
 
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
-)
+# env = environ.Env(
+#     # set casting, default value
+#     DEBUG=(bool, False)
+# )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+# environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECFRET_KEY')
+SECRET_KEY ='django-insecure-y21n=a_%c+wr1@42h5j#q&8y9(v3%_5nz9#u%8y+d2w38d=d09'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -61,7 +61,7 @@ AUTH_USER_MODEL = "UserService.CustomUser"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    # "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -94,12 +94,19 @@ WSGI_APPLICATION = 'BlogAPIproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
+# DATABASES = {
    
-    'default':  dj_database_url.parse(env('DATABASE_URL'))
+#     'default':  dj_database_url.parse(env('DATABASE_URL'))
  
     
+# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
 
 
 
@@ -144,13 +151,13 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL='media/'
 MEDIA_ROOT=BASE_DIR / "mediafiles"
 
-STORAGES = {
-    # ...
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
-WHITENOISE_MANIFEST_STRICT=False
+# STORAGES = {
+#     # ...
+#     "staticfiles": {
+#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+#     },
+# }
+# WHITENOISE_MANIFEST_STRICT=False
 
 
 # Default primary key field type
@@ -183,8 +190,8 @@ DJOSER = {
 
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
-        'basic': {
-            'type': 'apikey',
+        'Token': {
+            'type': 'apiKey',
             'name': 'Authorization',
             'in': 'header',
         }
